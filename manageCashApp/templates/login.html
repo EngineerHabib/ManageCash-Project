@@ -1,0 +1,33 @@
+{% extends 'base_auth.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  Account| Login
+{% endblock %}
+
+{% block content %}
+  <h2>Login</h2>
+  <form method="post">
+    {% csrf_token %}
+
+    {% if messages %}
+      {% for x in messages %}
+        <div>{{ x }}</div>
+      {% endfor %}
+    {% endif %}
+
+    {{ form|crispy }}
+    <input type="submit" value="Submit" class="btn btn-primary" />
+    <div>
+      <div>
+        <input type="checkbox" name="remember_me" />Remember Me
+      </div>
+      <div>
+        ><a href="#">Forgot Password?</a>
+      </div>
+    </div>
+    <div>
+      Don't have an account? <a href="{% url 'register_user' %}">Register</a>
+    </div>
+  </form>
+{% endblock %}
