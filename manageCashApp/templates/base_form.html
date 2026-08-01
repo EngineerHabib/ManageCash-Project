@@ -1,0 +1,33 @@
+{% extends 'base_auth.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  {{ title }}
+{% endblock %}
+
+{% block css %}
+  <style>
+    form {
+      margin-bottom: 100px;
+    }
+    label {
+      font-size: x-large;
+      font-weight: bold;
+    }
+    input,
+    textarea {
+      width: 100%;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h2 class="text-center py-5">{{ heading }}</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <input type="submit" value="Submit" class="btn btn-primary" />
+    </form>
+  </div>
+{% endblock %}

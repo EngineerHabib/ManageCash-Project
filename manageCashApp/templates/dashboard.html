@@ -1,0 +1,164 @@
+{% extends 'base_auth.html' %}
+
+{% block title %}
+  Dashboard
+{% endblock %}
+
+{% block css %}
+  <style>
+    .card-body {
+      text-align: center;
+    }
+    
+    .card-title {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      color: black;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <h4 class="py-3"><a href="{% url 'logout_user' %}" style="float: right;">Logout</a></h4>
+  <h2 class="text-center">Dashboard</h2>
+
+  {% if messages %}
+    {% for x in messages %}
+      <div class="container alert alert-success">{{ x }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-header">Income</div>
+          <div class="card-body">
+            <h4 class="card-title">{{ income }}$</h4>
+            <a href="{% url 'create_addcash' %}" class="card-button btn btn-dark">ADD INCOME</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-header">Expense</div>
+          <div class="card-body">
+            <h4 class="card-title">{{ expense }}$</h4>
+            <a href="{% url 'create_expense' %}" class="card-button btn btn-dark">ADD EXPENSE</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card text-white bg-primary mb-3">
+          <div class="card-header">Total</div>
+          <div class="card-body">
+            <h4 class="card-title total">{{ total }}$</h4>
+            <a class="card-button btn btn-dark">IN HAND CASH</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <table class="table caption-top">
+      <caption>Income</caption>
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Source</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for x in request.user.add_cash.all %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ x.source|truncatechars:50 }}</td>
+            <td>{{ x.amount }}</td>
+            <td>{{ x.datetime }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Details</button>
+              <a href="{% url 'update_addcash' x.id %}" class="btn btn-warning">Update</a>
+              <a href="{% url 'delete_addcash' x.id %}" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+          <!-- Modal One -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">{{ x.amount }}$</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <span class="fw-bold">Datetime:</span> {{ x.datetime }}
+                  </p>
+                  <p>
+                    <span class="fw-bold">Source:</span> {{ x.source }}
+                  </p>
+                  <p>
+                    <span class="fw-bold">Description:</span> {{ x.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container">
+    <table class="table caption-top">
+      <caption>Expense</caption>
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Description</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Date</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for x in request.user.expense.all %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ x.description|truncatechars:50 }}</td>
+            <td>{{ x.amount }}</td>
+            <td>{{ x.datetime }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#expensemodel">Details</button>
+              <a href="{% url 'update_expense' x.id %}" class="btn btn-warning">Update</a>
+              <a href="{% url 'delete_expense' x.id %}" class="btn btn-danger">Delete</a>
+            </td>
+          </tr>
+          <!-- Modal Two -->
+          <div class="modal fade" id="expensemodel" tabindex="-1" aria-labelledby="expensemodel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="expensemodelLabel">{{ x.amount }}$</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>
+                    <span class="fw-bold">Datetime:</span> {{ x.datetime }}
+                  </p>
+                  <p>
+                    <span class="fw-bold">Description:</span> {{ x.description }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
