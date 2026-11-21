@@ -1,0 +1,130 @@
+{% extends 'base_auth.html' %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8 col-md-10">
+
+            <!-- PROFILE CARD -->
+            <div class="card shadow-sm border-0">
+
+                <!-- PROFILE HEADER -->
+                <div class="card-header bg-primary text-white text-center py-4">
+
+
+
+                    <h3 class="mb-1">
+                        {{ user.get_full_name|default:user.username }}
+                    </h3>
+
+                    <p class="mb-0">
+                        @{{ user.username }}
+                    </p>
+
+                </div>
+
+                <!-- PROFILE DETAILS -->
+                <div class="card-body p-4">
+
+                    <h5 class="text-primary border-bottom pb-2 mb-4">
+                        <i class="bi bi-person-lines-fill me-2"></i>
+                        Personal Information
+                    </h5>
+
+                    <!-- USERNAME -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-semibold">
+                            Username
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.username }}
+                        </div>
+                    </div>
+
+
+
+
+
+                    <!-- EMAIL -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-semibold">
+                            Email
+                        </div>
+                        <div class="col-sm-8">
+                            {{ user.email|default:"Not added" }}
+                        </div>
+                    </div>
+
+                    <!-- PHONE -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-semibold">
+                            Phone
+                        </div>
+                        <div class="col-sm-8">
+                            {{ profile.phone|default:"Not added" }}
+                        </div>
+                    </div>
+
+                    <!-- ADDRESS -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-semibold">
+                            Address
+                        </div>
+                        <div class="col-sm-8">
+                            {{ profile.address|default:"Not added" }}
+                        </div>
+                    </div>
+
+                    <!-- BIO -->
+                    <div class="row mb-3">
+                        <div class="col-sm-4 fw-semibold">
+                            About Me
+                        </div>
+                        <div class="col-sm-8">
+                            {{ profile.bio|default:"Not added" }}
+                        </div>
+                    </div>
+
+                    <hr>
+
+
+
+
+
+                    <!-- BUTTONS -->
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+
+                        <a href="{% url 'edit_profile' %}" class="btn btn-primary px-4">
+
+                            <i class="bi bi-pencil-square me-1"></i>
+                            Edit Profile
+
+                        </a>
+
+                        <a href="{% url 'dashboard' %}" class="btn btn-secondary px-4">
+
+                            <i class="bi bi-speedometer2 me-1"></i>
+                            Dashboard
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

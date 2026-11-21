@@ -1,0 +1,140 @@
+
+{% extends 'base_auth.html' %}
+
+{% block title %}
+    Edit Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-8 col-md-10">
+
+            <div class="card shadow-sm border-0">
+
+                <!-- HEADER -->
+                <div class="card-header bg-primary text-white py-3">
+                    <h4 class="mb-0">
+                        <i class="bi bi-person-gear me-2"></i>
+                        Edit Profile
+                    </h4>
+                </div>
+
+                <!-- BODY -->
+                <div class="card-body p-4">
+
+                    {% if messages %}
+                        {% for x in messages %}
+                            <div class="alert alert-success alert-dismissible fade show">
+                                {{ x }}
+                                <button type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="alert">
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" enctype="multipart/form-data">
+
+                        {% csrf_token %}
+
+                        <!-- PROFILE PICTURE -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">
+                                Profile Picture
+                            </label>
+
+                            {{ form.profile_picture }}
+
+                            {% for error in form.profile_picture.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <hr>
+
+                        <h5 class="mb-3">
+                            Personal Information
+                        </h5>
+
+                        <!-- PHONE -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                Phone Number
+                            </label>
+
+                            {{ form.phone }}
+
+                            {% for error in form.phone.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- ADDRESS -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                Address
+                            </label>
+
+                            {{ form.address }}
+
+                            {% for error in form.address.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- BIO -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                About Me
+                            </label>
+
+                            {{ form.bio }}
+
+                            {% for error in form.bio.errors %}
+                                <div class="text-danger small">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <!-- BUTTONS -->
+                        <div class="d-flex justify-content-between mt-4">
+
+                            <a href="{% url 'view_profile' %}"
+                               class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Cancel
+                            </a>
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+                                <i class="bi bi-save me-1"></i>
+                                Save Changes
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

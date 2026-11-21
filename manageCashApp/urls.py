@@ -1,3 +1,4 @@
+
 from django.urls import path
 from .views import *
 
@@ -13,5 +14,8 @@ urlpatterns = [
     path('update_expense/<str:id>/', update_expense, name='update_expense'),
     path('delete_addcash/<str:id>/', delete_addcash, name='delete_addcash'),
     path('delete_expense/<str:id>/', delete_expense, name='delete_expense'),
-]
 
+    # Profile Management
+    path('profile/', view_profile, name='view_profile'),
+    path('profile/edit/', edit_profile, name='edit_profile'),
+]
